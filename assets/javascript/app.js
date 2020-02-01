@@ -35,4 +35,33 @@ var firebaseConfig = {
   
     // Uploads employee data to the database
     db.ref().push(newTrain);
+
+    // Clears all of the text-boxes
+    $("#train-name-input").val("");
+    $("#destination-input").val("");
+    $("#start-input").val("");
+    $("#frequency-input").val("");
 })
+
+db.ref().on("child_added", function(childSnapshot) {
+
+    var trainName = childSnapshot.val().name;
+    var trainDest = childSnapshot.val().destination;
+    var trainStart = childSnapshot.val().start;
+    var trainFreq = childSnapshot.val().frequency;
+
+    // var convertTrainStart = moment.unix(trainStart).format("HH:mm");
+    
+    var newRow = $("<tr>").append(
+        $("<td>").text(trainName),
+        $("<td>").text(trainDest),
+        // $("<td>").text(convertTrainStart),
+        $("<td>").text(trainFreq),
+        // $("<td>").text(trainArrival),
+        // $("<td>").text(trainNext)
+      );
+    
+      // Append the new row to the table
+      $("#train-table > tbody").append(newRow);
+
+});
