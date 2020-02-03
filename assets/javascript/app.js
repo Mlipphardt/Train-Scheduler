@@ -52,9 +52,7 @@ db.ref().on("child_added", function(childSnapshot) {
 
     var trainStartdeUnixer = moment.unix(trainStart).format("MM/DD/YYYY");
 
-
     var trainStartConverted = moment(trainStartdeUnixer, "HH:mm").subtract(1, "years");
-    // var currentTime = moment();
 
     var diffTime = moment().diff(moment(trainStartConverted), "minutes");
     console.log("DIFFERENCE IN TIME: " + diffTime);
@@ -65,7 +63,6 @@ db.ref().on("child_added", function(childSnapshot) {
     var tMinutesTillTrain = trainFreq - tRemainder;
     console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
     
-        // Next Train
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
     console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
     
@@ -73,10 +70,9 @@ db.ref().on("child_added", function(childSnapshot) {
     var newRow = $("<tr>").append(
         $("<td>").text(trainName),
         $("<td>").text(trainDest),
-        // $("<td>").text(convertTrainStart),
         $("<td>").text(trainFreq),
-        // $("<td>").text(trainArrival),
-        // $("<td>").text(trainNext)
+        $("<td>").text(moment(nextTrain).format("hh:mm")),
+        $("<td>").text(tMinutesTillTrain)
       );
     
       // Append the new row to the table
