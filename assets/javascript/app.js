@@ -50,7 +50,25 @@ db.ref().on("child_added", function(childSnapshot) {
     var trainStart = childSnapshot.val().start;
     var trainFreq = childSnapshot.val().frequency;
 
-    // var convertTrainStart = moment.unix(trainStart).format("HH:mm");
+    var trainStartdeUnixer = moment.unix(trainStart).format("MM/DD/YYYY");
+
+
+    var trainStartConverted = moment(trainStartdeUnixer, "HH:mm").subtract(1, "years");
+    // var currentTime = moment();
+
+    var diffTime = moment().diff(moment(trainStartConverted), "minutes");
+    console.log("DIFFERENCE IN TIME: " + diffTime);
+    
+    var tRemainder = diffTime % trainFreq;
+    console.log(tRemainder);
+    
+    var tMinutesTillTrain = trainFreq - tRemainder;
+    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+    
+        // Next Train
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+    
     
     var newRow = $("<tr>").append(
         $("<td>").text(trainName),
